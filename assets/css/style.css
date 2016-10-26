@@ -1,0 +1,11 @@
+.charSelected {
+	border: 2px solid blue;
+	max-width: 250px;
+	text-align: center;
+}
+
+.enemyOption, .enemyDef {
+	border: 2px solid red;
+	max-width: 250px;
+	text-align: center;
+}
