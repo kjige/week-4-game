@@ -32,15 +32,12 @@ var chars = [
 	}
 ]
 
-//loop to create chars
+//loop to create characters
 for (var i = 0; i < chars.length; i++) {
 	var button = $('<button>');
 	button.attr({
-		'data-name': chars[i].name,
-		'data-health': chars[i].health,
-		'data-attack': chars[i].attack,
-		'data-counter': chars[i].counter,
-		'data-image': chars[i].image
+		'data-index': [i],
+		'class': 'charSelect'
 	});
 	var a = $('<p>').text(chars[i].name);
 	var b = $('<img>');
@@ -53,15 +50,23 @@ for (var i = 0; i < chars.length; i++) {
 	$('.options').append(button);
 }
 
-$('.options').click(function() {
-	// $('.options').hide();
-	var div = $('<div>');
-	var a = $('<p>').text($(this).data('name'));
-	var b = $('<img>').attr({
-		'src': $(this).data('image'),
-		'height': '100px'
-	});
-	var c = $('<p>').text($(this).data('health'));
-	div.append(a,b,c);
-	$('.selected').append(div);
-})
+// player selects character
+var chosen = true;
+if (chosen) {
+	$('.charSelect').one('click', function() {
+		$('.options').hide();
+		var index = $(this).data('index');
+		var div = $('<div>');
+		var a = $('<p>').html(chars[index].name);
+		var b = $('<img>').attr({
+			'src': chars[index].image,
+			'height': '100px'
+		});
+		var c = $('<p>').html(chars[index].health);
+		div.append(a,b,c);
+		$('.selected').append(div);
+		chosen = false;
+	})
+}
+
+
