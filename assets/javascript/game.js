@@ -52,10 +52,11 @@ for (var i = 0; i < chars.length; i++) {
 
 // player selects character
 var chosen = true;
+var index;
 if (chosen) {
 	$('.charSelect').one('click', function() {
 		$('.options').hide();
-		var index = $(this).data('index');
+		index = $(this).data('index');
 		var div = $('<div>');
 		var a = $('<p>').html(chars[index].name);
 		var b = $('<img>').attr({
@@ -66,7 +67,27 @@ if (chosen) {
 		div.append(a,b,c);
 		$('.selected').append(div);
 		chosen = false;
+
+	// creates enemy options	
+	var enemyArray = [0,1,2,3];
+	enemyArray.splice(index, 1);
+	for (var i = 0; i < enemyArray.length; i++) {
+		var enemyIndex = enemyArray[i];
+		var button = $('<button>');
+		button.attr({
+			'data-index': chars[enemyIndex],
+			'class': 'enemyOption'
+		});
+		var a = $('<p>').text(chars[enemyIndex].name);
+		var b = $('<img>');
+		b.attr({
+		'src': chars[enemyIndex].image,
+		'height': '100px'
+		});
+		var c = $('<p>').text(chars[enemyIndex].health);
+		button.append(a,b,c);
+		$('.enemies').append(button);
+	}
 	})
 }
-
 
