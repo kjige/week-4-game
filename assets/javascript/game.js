@@ -39,13 +39,13 @@ for (var i = 0; i < chars.length; i++) {
 		'data-index': [i],
 		'class': 'charSelect'
 	});
-	var a = $('<p>').text(chars[i].name);
+	var a = $('<p>').html(chars[i].name);
 	var b = $('<img>');
 	b.attr({
-	'src': chars[i].image,
-	'height': '100px'
+		'src': chars[i].image,
+		'height': '100px'
 	});
-	var c = $('<p>').text(chars[i].health);
+	var c = $('<p>').html(chars[i].health);
 	button.append(a,b,c);
 	$('.options').append(button);
 }
@@ -53,8 +53,9 @@ for (var i = 0; i < chars.length; i++) {
 // player selects character
 var chosen = true;
 var index;
+var enemyArray = [0,1,2,3];
 if (chosen) {
-	$('.charSelect').one('click', function() {
+	$('.charSelect').click(function() {
 		$('.options').hide();
 		index = $(this).data('index');
 		var div = $('<div>');
@@ -69,25 +70,47 @@ if (chosen) {
 		chosen = false;
 
 	// creates enemy options	
-	var enemyArray = [0,1,2,3];
 	enemyArray.splice(index, 1);
 	for (var i = 0; i < enemyArray.length; i++) {
 		var enemyIndex = enemyArray[i];
 		var button = $('<button>');
 		button.attr({
-			'data-index': chars[enemyIndex],
+			'data-index': [enemyIndex],
 			'class': 'enemyOption'
 		});
-		var a = $('<p>').text(chars[enemyIndex].name);
-		var b = $('<img>');
-		b.attr({
-		'src': chars[enemyIndex].image,
-		'height': '100px'
+		var a = $('<p>').html(chars[enemyIndex].name);
+		var b = $('<img>').attr({
+			'src': chars[enemyIndex].image,
+			'height': '100px'
 		});
-		var c = $('<p>').text(chars[enemyIndex].health);
+		var c = $('<p>').html(chars[enemyIndex].health);
 		button.append(a,b,c);
 		$('.enemies').append(button);
 	}
 	})
+}
+
+// player selects enemy to attack
+var enemyChosen = true;
+var enemyIndex;
+if (enemyChosen) {
+	$('.enemyOption').click(function() {
+		enemyIndex = $(this).data('index');
+		var div = $('<div>');
+		div.attr({
+			'data-index': [enemyIndex],
+			'class': 'enemyDef'
+		});
+		var a = $('<p>').html(chars[enemyIndex].name);
+		var b = $('<img>').attr({
+			'src': chars[enemyIndex].image,
+			'height': '100px',
+		});
+		var c = $('<p>').html(chars[enemyIndex].health);
+		div.append(a,b,c);
+		$('.defender').append(div);
+		enemyChosen = false;
+	});
+console.log(enemyIndex);
 }
 
