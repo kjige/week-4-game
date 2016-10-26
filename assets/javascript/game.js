@@ -2,32 +2,32 @@ var chars = [
 	obiwan = {
 			name: 'Obiwan Kenobi',
 			health: 120,
-			attack: 6,
-			counter: 20,
+			attack: 8,
+			counter: 15,
 			image: "assets/images/obi-wan.jpg"
 	},
 
 	luke = {
 			name: 'Luke Skywalker',
 			health: 100,
-			attack: 6,
+			attack: 8,
 			counter: 10,
 			image: "assets/images/luke-skywalker.jpg"
 	},
 
 	sidious = {
 			name: 'Darth Sidious',
-			health: 140,
-			attack: 6,
-			counter: 30,
+			health: 150,
+			attack: 8,
+			counter: 20,
 			image: "assets/images/darth-sidious.png"
 	},
 
 	maul = {
 			name: 'Darth Maul',
-			health: 160,
-			attack: 6,
-			counter: 40,
+			health: 180,
+			attack: 8,
+			counter: 25,
 			image: "assets/images/darth-maul.jpg"
 	}
 ]
@@ -56,6 +56,7 @@ var index;
 var enemyArray = [0,1,2,3];
 var enemyChosen = true;
 var enemyIndex;
+var enemyAlive = true;
 if (chosen) {
 	$('.charSelect').click(function() {
 		$('.options').hide();
@@ -67,6 +68,7 @@ if (chosen) {
 			'height': '100px'
 		});
 		var c = $('<p>').html(chars[index].health);
+		c.attr('class', 'playerHealth');
 		div.append(a,b,c);
 		$('.selected').append(div);
 		chosen = false;
@@ -94,6 +96,7 @@ if (chosen) {
 		$('.enemyOption').click(function() {
 			if (enemyChosen) {
 				enemyIndex = $(this).data('index');
+				$(this).hide();
 				var div = $('<div>');
 				div.attr({
 					'data-index': [enemyIndex],
@@ -105,11 +108,48 @@ if (chosen) {
 					'height': '100px',
 				});
 				var c = $('<p>').html(chars[enemyIndex].health);
+				c.attr('class', 'enemyHealth');
 				div.append(a,b,c);
 				$('.defender').append(div);
 				enemyChosen = false;
+				enemyAlive = true;
 			};
 		});
+
+		// when attack button is clicked
+		var a = $('<p>').attr('class', 'gameStatus');
+		$('.attack').click(function() {	
+
+			//reduce health of player and enemy 
+			if (enemyAlive) {
+				chars[enemyIndex].health -= chars[index].attack;
+				chars[index].health -= chars[enemyIndex].counter;
+				$('.enemyHealth').html(chars[enemyIndex].health);
+				$('.playerHealth').html(chars[index].health);
+				a.html(
+					'You attacked ' + chars[enemyIndex].name + ' for ' + chars[index].attack + ' damage!\r' +
+					chars[enemyIndex].name + ' attacked you back for ' + chars[enemyIndex].counter + ' damage!'
+					);
+				$('.defender').append(a);
+				chars[index].attack += 8;
+			}
+
+			// check player's health
+			if (chars[index].health < 1) {
+				$('.gameStatus').html('You were defeated! Game Over!');
+				$('<button>').attr('class', 'restart').html('Restart');
+				enemyAlive = false;
+				
+			// check enemy's health
+			} else if (chars[enemyIndex].health < 1) {
+				$('.gameStatus').html(
+					'You defeated ' + chars[enemyIndex].name + '!!!\r' +
+					'Select next enemy!');
+				$('.enemyDef').hide();
+				enemyAlive = false;
+				enemyChosen = true;
+			}
+		})
 	});
 }
 
