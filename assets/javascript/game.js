@@ -32,6 +32,32 @@ var chars = [
 	}
 ]
 
+var chosen = true;
+var index = 0;
+var enemyArray = [0,1,2,3];
+var enemyChosen = true;
+var enemyIndex = 0;
+var enemyAlive = true;
+
+resetChars();
+if (createCharSelection()) {
+	if (charSelect()) {
+		if (enemyOptions()) {
+			if (enemySelect()) {
+				if (attack()) {
+					if (playerHealth()) {
+						if (enemyHealth()) {
+							if (enemiesLeft()) {
+								restartGame()
+							};
+						};
+					};
+				};
+			};
+		};
+	};
+};
+
 // resets characters
 function resetChars() {
 	chars = [
@@ -69,30 +95,12 @@ function resetChars() {
 	]
 }
 
-resetChars();
-if (createCharSelection()) {
-	if (charSelect()) {
-		if (enemyOptions()) {
-			if (enemySelect()) {
-				if (attack()) {
-					if (playerHealth()) {
-						if (enemyHealth()) {
-							if (enemiesLeft()) {
-
-						}
-					}
-				}
-			};
-		};
-	};
-};
-
 // create characters in DOM
 function createCharSelection() {
 	for (var i = 0; i < chars.length; i++) {
 		var button = $('<button>');
 		button.attr({
-			'data-index': [i],
+			'data-index': i,
 			'class': 'charSelect'
 		});
 		var a = $('<p>').html(chars[i].name);
@@ -105,34 +113,29 @@ function createCharSelection() {
 		button.append(a,b,c);
 		$('.options').append(button);
 	};
+	return true;
 }
-
-var chosen = true;
-var index = 0;
-var enemyArray = [0,1,2,3];
-var enemyChosen = true;
-var enemyIndex = 0;
-var enemyAlive = true;
 	
 // player selects character
 function charSelect() {
-if (chosen) {
-	$('.charSelect').click(function() {
-		$('.options').hide();
-		index = $(this).data('index');
-		var div = $('<div>').attr('class', 'charSelected');
-		var a = $('<p>').html(chars[index].name);
-		var b = $('<img>').attr({
-			'src': chars[index].image,
-			'height': '100px'
+	if (chosen===true) {
+		$('.charSelect').click(function() {
+			$('.charSelect').hide();
+			index = $(this).data('index');
+			var div = $('<div>').attr('class', 'charSelected');
+			var a = $('<p>').html(chars[index].name);
+			var b = $('<img>').attr({
+				'src': chars[index].image,
+				'height': '100px'
+			});
+			var c = $('<p>').html(chars[index].health);
+			c.attr('class', 'playerHealth');
+			div.append(a,b,c);
+			$('.selected').append(div);
+			chosen = false;
+			return true;
 		});
-		var c = $('<p>').html(chars[index].health);
-		c.attr('class', 'playerHealth');
-		div.append(a,b,c);
-		$('.selected').append(div);
-		chosen = false;
-		return true;
-	});
+	}
 }
 
 // creates enemy options
@@ -142,7 +145,7 @@ function enemyOptions() {
 		var enemyIndex = enemyArray[i];
 		var button = $('<button>');
 		button.attr({
-			'data-index': [enemyIndex],
+			'data-index': enemyIndex,
 			'class': 'enemyOption'
 		});
 		var a = $('<p>').html(chars[enemyIndex].name);
@@ -153,10 +156,9 @@ function enemyOptions() {
 		var c = $('<p>').html(chars[enemyIndex].health);
 		button.append(a,b,c);
 		$('.enemies').append(button);
-		return true;
-	}
-}	
-		
+	};
+	return true;
+}
 
 // player selects enemy to attack
 function enemySelect() {
@@ -166,7 +168,7 @@ function enemySelect() {
 			$(this).hide();
 			var div = $('<div>');
 			div.attr({
-				'data-index': [enemyIndex],
+				'data-index': enemyIndex,
 				'class': 'enemyDef'
 			});
 			var a = $('<p>').html(chars[enemyIndex].name);
@@ -190,7 +192,6 @@ function enemySelect() {
 function attack(){
 	var a = $('<p>').attr('class', 'gameStatus');
 	$('.attack').click(function() {	
-
 		//reduce health of player and enemy 
 		if (enemyAlive) {
 			chars[enemyIndex].health -= chars[index].attack;
@@ -231,6 +232,7 @@ function enemyHealth() {
 		$('.enemyDef').hide();
 		enemyAlive = false;
 		enemyChosen = true;
+		return true;
 	};
 }
 
@@ -258,7 +260,4 @@ function restartGame() {
 		resetChars();
 	});
 }
-}
-}
-
 
