@@ -1,3 +1,11 @@
+body {
+	background-image: url("../images/star_wars_xwing.jpg");
+	background-size: auto auto;
+	background-repeat: no-repeat;
+	background-position: center;
+
+}
+
 .charSelected {
 	border: 2px solid blue;
 	max-width: 250px;
