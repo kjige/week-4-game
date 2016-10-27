@@ -39,24 +39,32 @@ var enemyChosen = true;
 var enemyIndex = 0;
 var enemyAlive = true;
 
-resetChars();
-if (createCharSelection()) {
-	if (charSelect()) {
-		if (enemyOptions()) {
-			if (enemySelect()) {
-				if (attack()) {
-					if (playerHealth()) {
-						if (enemyHealth()) {
-							if (enemiesLeft()) {
-								restartGame()
-							};
-						};
-					};
-				};
-			};
-		};
-	};
-};
+function play() {
+	resetChars();
+	if (createCharSelection()) {
+		if (checkChosen()) {
+			if (charSelect()) {
+				if (enemyOptions()) {
+					if (enemySelect()) {
+						if (attack()) {
+							if (playerHealth()) {
+								if (enemyHealth()) {
+									if (enemiesLeft()) {
+										play();
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+}
+
+$('document').ready(function(){
+	play();
+});
 
 // resets characters
 function resetChars() {
@@ -93,6 +101,13 @@ function resetChars() {
 				image: "assets/images/darth-maul.jpg"
 		}
 	]
+
+chosen = true;
+index = 0;
+enemyArray = [0,1,2,3];
+enemyChosen = true;
+enemyIndex = 0;
+enemyAlive = true;
 }
 
 // create characters in DOM
@@ -116,26 +131,30 @@ function createCharSelection() {
 	return true;
 }
 	
+function checkChosen() {
+	if (chosen) {
+		return true;
+	}
+}
+
 // player selects character
 function charSelect() {
-	if (chosen===true) {
-		$('.charSelect').click(function() {
-			$('.charSelect').hide();
-			index = $(this).data('index');
-			var div = $('<div>').attr('class', 'charSelected');
-			var a = $('<p>').html(chars[index].name);
-			var b = $('<img>').attr({
-				'src': chars[index].image,
-				'height': '100px'
-			});
-			var c = $('<p>').html(chars[index].health);
-			c.attr('class', 'playerHealth');
-			div.append(a,b,c);
-			$('.selected').append(div);
-			chosen = false;
-			return true;
+	$('.charSelect').click(function() {
+		index = $(this).data('index');
+		var div = $('<div>').attr('class', 'charSelected');
+		var a = $('<p>').html(chars[index].name);
+		var b = $('<img>').attr({
+			'src': chars[index].image,
+			'height': '100px'
 		});
-	}
+		var c = $('<p>').html(chars[index].health);
+		c.attr('class', 'playerHealth');
+		div.append(a,b,c);
+		$('.selected').append(div);
+		$('.charSelect').hide();
+		chosen = false;
+		return true;
+	});
 }
 
 // creates enemy options
@@ -180,9 +199,9 @@ function enemySelect() {
 			c.attr('class', 'enemyHealth');
 			div.append(a,b,c);
 			$('.defender').append(div);
+			$('.gameStatus').html('');
 			enemyChosen = false;
 			enemyAlive = true;
-			$('.gameStatus').html('');
 			return true;
 		};
 	});
@@ -247,17 +266,5 @@ function enemiesLeft() {
 	} else {
 		return false;
 	};
-}
-
-function restartGame() {
-	$('.restart').click(function() {
-		chosen = true;
-		index = 0;
-		enemyArray = [0,1,2,3];
-		enemyChosen = true;
-		enemyIndex = 0;
-		enemyAlive = true;
-		resetChars();
-	});
 }
 
