@@ -89,11 +89,12 @@ enemyChosen = true;
 enemyIndex = 0;
 enemyAlive = false;
 enemiesRemaining = 3;
-var chosenChar;
-var enemyChoice;
+chosenChar = 0;
+enemyChoice = 0;
 $('.charSelected').remove();
 $('.enemyOption').remove();
 $('.gameStatus').remove();
+$('.enemyDef').remove();
 createCharSelection();
 }
 
@@ -292,7 +293,7 @@ function enemyDefeated() {
 	$('.gameStatus').html(
 		'You defeated ' + chars[enemyIndex].name + '!!!' +
 		'\n' + 'Select next enemy!');
-	$('.enemyDef').hide();
+	$('.enemyDef').remove();
 	chars[enemyIndex].attack = 0;
 	enemyChosen = true;
 	enemyAlive = false;
@@ -324,7 +325,7 @@ function allDefeated() {
 function restartButton() {
 	var button = $('<button>').attr('class', 'restart').html('Restart');
 	$('.gameStatus').append(button);
-	$('.enemyDef').hide();
+	$('.enemyDef').remove();
 	restart();
 }
 
