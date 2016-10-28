@@ -184,10 +184,11 @@ function enemyClick() {
 function enemyWasChosen() {
 	if (enemyChosen) {
 		enemySelect();
+	}
 }
 
 // append selected enemy to div
-function enemySelect(){
+function enemySelect() {
 	enemyIndex = enemyChoice.data('index');
 	enemyArray.splice(enemyIndex, 1);
 	enemyChoice.hide();
@@ -207,45 +208,49 @@ function enemySelect(){
 	$('.defender').append(div);
 	$('.gameStatus').html('');
 	enemyChosen = false;
+	beforeAttack();
+}
+
+// check player health, enemy health, and enemies left
+function beforeAttack() {
+	playerHealth();
+	enemyHealth();
+	enemiesLeft();
 	attack();
-	};
 }
 
 // when attack button is clicked
 function attack() {
 	$('.attack').click(function() {	
-		enemyAlive();
+		isEnemyAlive();
 	});
+}
 
 // check if enemy is alive
-function enemyAlive() {
+function isEnemyAlive() {
 	if (enemyAlive) {
 		enemyAttacked();
-		playerHealth();
-		enemyHealth();
-		enemiesLeft();
 	}
 }
 
 //reduce health of player and enemy 
 function enemyAttacked() {
-		chars[enemyIndex].health -= chars[index].attack;
-		chars[index].health -= chars[enemyIndex].counter;
-		$('.enemyHealth').html(chars[enemyIndex].health);
-		$('.playerHealth').html(chars[index].health);
-		damage();
-	};
+	chars[enemyIndex].health -= chars[index].attack;
+	chars[index].health -= chars[enemyIndex].counter;
+	$('.enemyHealth').html(chars[enemyIndex].health);
+	$('.playerHealth').html(chars[index].health);
+	damage();
 }
 
-var a = $('<p>').attr('class', 'gameStatus');
+var z = $('<p>').attr('class', 'gameStatus');
 // updates player on damage taken and increase attack
 function damage() {
-	a.html( 'You attacked ' + 
+	z.html( 'You attacked ' + 
 			chars[enemyIndex].name + ' for ' + 
 			chars[index].attack + ' damage!' + '\n' +
 			chars[enemyIndex].name + ' attacked you back for ' + 
 			chars[enemyIndex].counter + ' damage!');
-	$('.defender').append(a);
+	$('.defender').append(z);
 	chars[index].attack += 8;
 }
 
@@ -275,6 +280,7 @@ function enemyHealth() {
 
 // tells player that enemy was defeated
 function enemyDefeated() {
+	$('.attack').click(function(){});
 	$('.gameStatus').html('');
 	$('.gameStatus').html(
 		'You defeated ' + chars[enemyIndex].name + '!!!' +
@@ -318,4 +324,3 @@ function restart() {
  		resetChars();
  	})
  }
-
