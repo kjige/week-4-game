@@ -1,3 +1,4 @@
+// declare variables
 var chars = [
 	obiwan = {
 			name: 'Obiwan Kenobi',
@@ -80,7 +81,7 @@ function resetChars() {
 				counter: 25,
 				image: "assets/images/darth-maul.jpg"
 		}
-	]
+	];
 
 chosen = true;
 index = 0;
@@ -127,7 +128,7 @@ function charSelect() {
 	});
 }
 
-// check if player has chosen a character
+// check if player has previously chosen a character
 function checkChosen() {
 	if (chosen) {
 		chosen = false;
@@ -174,7 +175,7 @@ function enemyOptions() {
 	enemyClick();
 }
 
-// player selects enemy to attack
+// creates click event listener for when choosing an enemy to fight
 function enemyClick() {
 	$('.enemyOption').click(function() {
 		enemyChoice = $(this);
@@ -182,7 +183,7 @@ function enemyClick() {
 	});
 }
 
-// check if enemy has been chosen
+// check if enemy has already been chosen prevously
 function enemyWasChosen() {
 	if (enemyChosen) {
 		enemyChosen = false;
@@ -215,7 +216,7 @@ function enemySelect() {
 	attack();
 }
 
-// when attack button is clicked
+// creates click event listener for attack button
 function attack() {
 	$('.attack').click(function() {	
 		isEnemyAlive();
@@ -238,7 +239,7 @@ function enemyAttacked() {
 	damage();
 }
 
-// updates player on damage taken and increase attack
+// updates player on damage taken and increases attack
 var z = $('<p>').attr('class', 'gameStatus');
 function damage() {
 	z.html( 'You attacked ' + 
