@@ -37,7 +37,7 @@ var index = 0;
 var enemyArray = [0,1,2,3];
 var enemyChosen = true;
 var enemyIndex = 0;
-var enemyAlive = true;
+var enemyAlive = false;
 var enemiesRemaining = 3;
 var chosenChar;
 var enemyChoice;
@@ -87,7 +87,7 @@ index = 0;
 enemyArray = [0,1,2,3];
 enemyChosen = true;
 enemyIndex = 0;
-enemyAlive = true;
+enemyAlive = false;
 enemiesRemaining = 3;
 var chosenChar;
 var enemyChoice;
@@ -126,8 +126,10 @@ function charSelect() {
 	});
 }
 
+// check if player has chosen a character
 function checkChosen() {
 	if (chosen) {
+		chosen = false;
 		charSelected();
 	}
 }
@@ -146,7 +148,6 @@ function charSelected() {
 	div.append(a,b,c);
 	$('.selected').append(div);
 	$('.charSelect').hide();
-	chosen = false;
 	enemyOptions();
 }
 
@@ -183,6 +184,8 @@ function enemyClick() {
 // check if enemy has been chosen
 function enemyWasChosen() {
 	if (enemyChosen) {
+		enemyChosen = false;
+		enemyAlive = true;
 		enemySelect();
 	}
 }
@@ -208,16 +211,16 @@ function enemySelect() {
 	$('.defender').append(div);
 	$('.gameStatus').html('');
 	enemyChosen = false;
-	beforeAttack();
+	attack();
 }
 
 // check player health, enemy health, and enemies left
-function beforeAttack() {
-	playerHealth();
-	enemyHealth();
-	enemiesLeft();
-	attack();
-}
+// function beforeAttack() {
+// 	playerHealth();
+// 	enemyHealth();
+// 	enemiesLeft();
+// 	attack();
+// }
 
 // when attack button is clicked
 function attack() {
@@ -246,18 +249,22 @@ var z = $('<p>').attr('class', 'gameStatus');
 // updates player on damage taken and increase attack
 function damage() {
 	z.html( 'You attacked ' + 
-			chars[enemyIndex].name + ' for ' + 
-			chars[index].attack + ' damage!' + '\n' +
-			chars[enemyIndex].name + ' attacked you back for ' + 
-			chars[enemyIndex].counter + ' damage!');
+		chars[enemyIndex].name + ' for ' + 
+		chars[index].attack + ' damage!' + '\n' +
+		chars[enemyIndex].name + ' attacked you back for ' + 
+		chars[enemyIndex].counter + ' damage!');
 	$('.defender').append(z);
 	chars[index].attack += 8;
+	playerHealth();
 }
 
 // check player's health
 function playerHealth() {
 	if (chars[index].health < 1) {
+		enemyAlive = false;
 		playerDefeated();
+	} else {
+		enemyHealth();
 	}
 }
 	
@@ -290,11 +297,14 @@ function enemyDefeated() {
 	enemyChosen = true;
 	enemyAlive = false;
 	enemiesRemaining -= 1;
+	enemiesLeft();
 }
 
 // check if all enemies are defeated
 function enemiesLeft() {
 	if (enemiesRemaining === 0) {
+		enemyAlive = false;
+		enemyChosen = false;
 		allDefeated();
 	} else {
 		chars[enemyIndex].attack = 0;
@@ -322,5 +332,5 @@ function restartButton() {
 function restart() {
  	$('.restart').click(function() {
  		resetChars();
- 	})
+ 	});
  }
