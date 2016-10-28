@@ -215,14 +215,6 @@ function enemySelect() {
 	attack();
 }
 
-// check player health, enemy health, and enemies left
-// function beforeAttack() {
-// 	playerHealth();
-// 	enemyHealth();
-// 	enemiesLeft();
-// 	attack();
-// }
-
 // when attack button is clicked
 function attack() {
 	$('.attack').click(function() {	
@@ -246,8 +238,8 @@ function enemyAttacked() {
 	damage();
 }
 
-var z = $('<p>').attr('class', 'gameStatus');
 // updates player on damage taken and increase attack
+var z = $('<p>').attr('class', 'gameStatus');
 function damage() {
 	z.html( 'You attacked ' + 
 		chars[enemyIndex].name + ' for ' + 
