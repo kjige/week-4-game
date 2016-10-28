@@ -221,6 +221,9 @@ function attack() {
 function enemyAlive() {
 	if (enemyAlive) {
 		enemyAttacked();
+		playerHealth();
+		enemyHealth();
+		enemiesLeft();
 	}
 }
 
@@ -244,16 +247,13 @@ function damage() {
 			chars[enemyIndex].counter + ' damage!');
 	$('.defender').append(a);
 	chars[index].attack += 8;
-	playerHealth();
 }
 
 // check player's health
 function playerHealth() {
 	if (chars[index].health < 1) {
 		playerDefeated();
-	} else {
-		enemyHealth();
-	};
+	}
 }
 	
 // player was defeated
@@ -268,7 +268,7 @@ function playerDefeated() {
 function enemyHealth() {
 	if (chars[enemyIndex].health < 1) {	
 		enemyAlive = false;
-		char[enemyIndex].attack = 0;
+		chars[enemyIndex].attack = 0;
 		enemyDefeated();
 	}
 }
@@ -284,7 +284,6 @@ function enemyDefeated() {
 	enemyChosen = true;
 	enemyAlive = false;
 	enemiesRemaining -= 1;
-	enemiesLeft();
 }
 
 // check if all enemies are defeated
