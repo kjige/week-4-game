@@ -98,7 +98,6 @@ $('.gameStatus').remove();
 $('.enemyDef').remove();
 createCharSelection();
 $('.attack').off();
-// $('.charSelect').off();
 $('.enemyOption').off();
 $('.restart').off();
 }
