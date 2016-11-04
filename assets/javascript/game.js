@@ -34,10 +34,10 @@ var chars = [
 ]
 
 var chosen = true;
-var index = 0;
+var index = '';
 var enemyArray = [0,1,2,3];
 var enemyChosen = true;
-var enemyIndex = 0;
+var enemyIndex = '';
 var enemyAlive = false;
 var enemiesRemaining = 3;
 var chosenChar;
@@ -84,10 +84,10 @@ function resetChars() {
 	];
 
 chosen = true;
-index = 0;
+index = '';
 enemyArray = [0,1,2,3];
 enemyChosen = true;
-enemyIndex = 0;
+enemyIndex = '';
 enemyAlive = false;
 enemiesRemaining = 3;
 chosenChar = 0;
@@ -97,6 +97,10 @@ $('.enemyOption').remove();
 $('.gameStatus').remove();
 $('.enemyDef').remove();
 createCharSelection();
+$('.attack').off();
+// $('.charSelect').off();
+$('.enemyOption').off();
+$('.restart').off();
 }
 
 // create characters in DOM
@@ -122,7 +126,7 @@ function createCharSelection() {
 
 // player selects character
 function charSelect() {
-	$('.charSelect').click(function() {
+	$('.charSelect').on('click', function() {
 		chosenChar = $(this);
 		checkChosen();
 	});
@@ -177,7 +181,7 @@ function enemyOptions() {
 
 // creates click event listener for when choosing an enemy to fight
 function enemyClick() {
-	$('.enemyOption').click(function() {
+	$('.enemyOption').on('click', function() {
 		enemyChoice = $(this);
 		enemyWasChosen();
 	});
@@ -218,8 +222,8 @@ function enemySelect() {
 
 // creates click event listener for attack button
 function attack() {
-	$('.attack').click(function() {	
-		isEnemyAlive();
+	$('.attack').on('click', function() {
+		isEnemyAlive();	
 	});
 }
 
@@ -232,6 +236,7 @@ function isEnemyAlive() {
 
 //reduce health of player and enemy 
 function enemyAttacked() {
+	console.log(chars[index].attack);
 	chars[enemyIndex].health -= chars[index].attack;
 	chars[index].health -= chars[enemyIndex].counter;
 	$('.enemyHealth').html(chars[enemyIndex].health);
@@ -267,6 +272,8 @@ function playerDefeated() {
 	$('.gameStatus').html('You were defeated! Game Over!');
 	enemyAlive = false;
 	chars[enemyIndex].attack = 0;
+	enemyIndex = '';
+	index = '';
 	restartButton();
 }
 
@@ -281,7 +288,6 @@ function enemyHealth() {
 
 // tells player that enemy was defeated
 function enemyDefeated() {
-	$('.attack').click(function(){});
 	$('.gameStatus').html('');
 	$('.gameStatus').html(
 		'You defeated ' + chars[enemyIndex].name + '!!!' +
@@ -291,6 +297,7 @@ function enemyDefeated() {
 	enemyChosen = true;
 	enemyAlive = false;
 	enemiesRemaining -= 1;
+	$('.attack').off();
 	enemiesLeft();
 }
 
@@ -311,6 +318,7 @@ function enemiesLeft() {
 function allDefeated() {
 	$('.gameStatus').html('');
 	$('.gameStatus').html('You defeated all enemies! You win! Game Over!!!');
+	enemyIndex = '';
 	restartButton();
 }
 
@@ -324,7 +332,7 @@ function restartButton() {
 
 // reset game when restart button is clicked
 function restart() {
- 	$('.restart').click(function() {
+ 	$('.restart').on('click', function() {
  		resetChars();
  	});
  }
