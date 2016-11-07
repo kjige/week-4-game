@@ -53,7 +53,7 @@ var chosenChar;
 var enemyChoice;
 
 $('document').ready(function(){
-	resetChars();
+	createCharSelection();
 });
 
 // resets characters
