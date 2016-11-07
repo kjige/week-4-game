@@ -1,37 +1,46 @@
 // declare variables
 var chars = [
-	obiwan = {
-			name: 'Obiwan Kenobi',
-			health: 120,
-			attack: 8,
-			counter: 10,
-			image: "assets/images/obi-wan.jpg"
-	},
+		{
+			c: {
+					name: 'Obiwan Kenobi',
+					health: 120,
+					attack: 6,
+					counter: 7,
+					image: "assets/images/obi-wan.jpg"
+			}
+		},
 
-	luke = {
-			name: 'Luke Skywalker',
-			health: 100,
-			attack: 8,
-			counter: 5,
-			image: "assets/images/luke-skywalker.jpg"
-	},
+		{
 
-	sidious = {
-			name: 'Darth Sidious',
-			health: 150,
-			attack: 8,
-			counter: 15,
-			image: "assets/images/darth-sidious.png"
-	},
+			c: {
+					name: 'Luke Skywalker',
+					health: 100,
+					attack: 6,
+					counter: 5,
+					image: "assets/images/luke-skywalker.jpg"
+			}
+		},
 
-	maul = {
-			name: 'Darth Maul',
-			health: 180,
-			attack: 8,
-			counter: 25,
-			image: "assets/images/darth-maul.jpg"
-	}
-]
+		{
+			c: {
+					name: 'Darth Sidious',
+					health: 140,
+					attack: 6,
+					counter: 9,
+					image: "assets/images/darth-sidious.png"
+			}
+		}, 
+
+		{
+			c: {
+					name: 'Darth Maul',
+					health: 160,
+					attack: 6,
+					counter: 11,
+					image: "assets/images/darth-maul.jpg"
+			}
+		}]
+
 
 var chosen = true;
 var index = '';
@@ -50,56 +59,64 @@ $('document').ready(function(){
 // resets characters
 function resetChars() {
 	chars = [
-		obiwan = {
-				name: 'Obiwan Kenobi',
-				health: 120,
-				attack: 8,
-				counter: 10,
-				image: "assets/images/obi-wan.jpg"
+		{
+			c: {
+					name: 'Obiwan Kenobi',
+					health: 120,
+					attack: 6,
+					counter: 7,
+					image: "assets/images/obi-wan.jpg"
+			}
 		},
 
-		luke = {
-				name: 'Luke Skywalker',
-				health: 100,
-				attack: 8,
-				counter: 5,
-				image: "assets/images/luke-skywalker.jpg"
+		{
+
+			c: {
+					name: 'Luke Skywalker',
+					health: 100,
+					attack: 6,
+					counter: 5,
+					image: "assets/images/luke-skywalker.jpg"
+			}
 		},
 
-		sidious = {
-				name: 'Darth Sidious',
-				health: 150,
-				attack: 8,
-				counter: 15,
-				image: "assets/images/darth-sidious.png"
-		},
+		{
+			c: {
+					name: 'Darth Sidious',
+					health: 140,
+					attack: 6,
+					counter: 9,
+					image: "assets/images/darth-sidious.png"
+			}
+		}, 
 
-		maul = {
-				name: 'Darth Maul',
-				health: 180,
-				attack: 8,
-				counter: 25,
-				image: "assets/images/darth-maul.jpg"
-		}
-	];
+		{
+			c: {
+					name: 'Darth Maul',
+					health: 160,
+					attack: 6,
+					counter: 11,
+					image: "assets/images/darth-maul.jpg"
+			}
+		}]
 
-chosen = true;
-index = '';
-enemyArray = [0,1,2,3];
-enemyChosen = true;
-enemyIndex = '';
-enemyAlive = false;
-enemiesRemaining = 3;
-chosenChar = 0;
-enemyChoice = 0;
-$('.charSelected').remove();
-$('.enemyOption').remove();
-$('.gameStatus').remove();
-$('.enemyDef').remove();
-createCharSelection();
-$('.attack').off();
-$('.enemyOption').off();
-$('.restart').off();
+	chosen = true;
+	index = '';
+	enemyArray = [0,1,2,3];
+	enemyChosen = true;
+	enemyIndex = '';
+	enemyAlive = false;
+	enemiesRemaining = 3;
+	chosenChar = 0;
+	enemyChoice = 0;
+	$('.charSelected').remove();
+	$('.enemyOption').remove();
+	$('.gameStatus').remove();
+	$('.enemyDef').remove();
+	$('.attack').off();
+	$('.enemyOption').off();
+	$('.restart').off();
+	createCharSelection();
 }
 
 // create characters in DOM
@@ -110,13 +127,13 @@ function createCharSelection() {
 			'data-index': i,
 			'class': 'charSelect'
 		});
-		var a = $('<p>').html(chars[i].name);
+		var a = $('<p>').html(chars[i].c.name);
 		var b = $('<img>');
 		b.attr({
-			'src': chars[i].image,
+			'src': chars[i].c.image,
 			'height': '100px'
 		});
-		var c = $('<p>').html(chars[i].health);
+		var c = $('<p>').html(chars[i].c.health);
 		button.append(a,b,c);
 		$('.options').append(button);
 	};
@@ -143,12 +160,12 @@ function checkChosen() {
 function charSelected() {
 	index = chosenChar.data('index');
 	var div = $('<div>').attr('class', 'charSelected');
-	var a = $('<p>').html(chars[index].name);
+	var a = $('<p>').html(chars[index].c.name);
 	var b = $('<img>').attr({
-		'src': chars[index].image,
+		'src': chars[index].c.image,
 		'height': '100px'
 	});
-	var c = $('<p>').html(chars[index].health);
+	var c = $('<p>').html(chars[index].c.health);
 	c.attr('class', 'playerHealth');
 	div.append(a,b,c);
 	$('.selected').append(div);
@@ -166,12 +183,12 @@ function enemyOptions() {
 			'data-index': enemyIndex,
 			'class': 'enemyOption'
 		});
-		var a = $('<p>').html(chars[enemyIndex].name);
+		var a = $('<p>').html(chars[enemyIndex].c.name);
 		var b = $('<img>').attr({
-			'src': chars[enemyIndex].image,
+			'src': chars[enemyIndex].c.image,
 			'height': '100px'
 		});
-		var c = $('<p>').html(chars[enemyIndex].health);
+		var c = $('<p>').html(chars[enemyIndex].c.health);
 		button.append(a,b,c);
 		$('.enemies').append(button);
 	};
@@ -205,12 +222,12 @@ function enemySelect() {
 		'data-index': enemyIndex,
 		'class': 'enemyDef'
 	});
-	var a = $('<p>').html(chars[enemyIndex].name);
+	var a = $('<p>').html(chars[enemyIndex].c.name);
 	var b = $('<img>').attr({
-		'src': chars[enemyIndex].image,
+		'src': chars[enemyIndex].c.image,
 		'height': '100px',
 	});
-	var c = $('<p>').html(chars[enemyIndex].health);
+	var c = $('<p>').html(chars[enemyIndex].c.health);
 	c.attr('class', 'enemyHealth');
 	div.append(a,b,c);
 	$('.defender').append(div);
@@ -235,11 +252,10 @@ function isEnemyAlive() {
 
 //reduce health of player and enemy 
 function enemyAttacked() {
-	console.log(chars[index].attack);
-	chars[enemyIndex].health -= chars[index].attack;
-	chars[index].health -= chars[enemyIndex].counter;
-	$('.enemyHealth').html(chars[enemyIndex].health);
-	$('.playerHealth').html(chars[index].health);
+	chars[enemyIndex].c.health -= chars[index].c.attack;
+	chars[index].c.health -= chars[enemyIndex].c.counter;
+	$('.enemyHealth').html(chars[enemyIndex].c.health);
+	$('.playerHealth').html(chars[index].c.health);
 	damage();
 }
 
@@ -247,18 +263,18 @@ function enemyAttacked() {
 var z = $('<p>').attr('class', 'gameStatus');
 function damage() {
 	z.html( 'You attacked ' + 
-		chars[enemyIndex].name + ' for ' + 
-		chars[index].attack + ' damage!' + '\n' +
-		chars[enemyIndex].name + ' attacked you back for ' + 
-		chars[enemyIndex].counter + ' damage!');
+		chars[enemyIndex].c.name + ' for ' + 
+		chars[index].c.attack + ' damage!' + '\n' +
+		chars[enemyIndex].c.name + ' attacked you back for ' + 
+		chars[enemyIndex].c.counter + ' damage!');
 	$('.defender').append(z);
-	chars[index].attack += 8;
+	chars[index].c.attack += 8;
 	playerHealth();
 }
 
 // check player's health
 function playerHealth() {
-	if (chars[index].health < 1) {
+	if (chars[index].c.health < 1) {
 		enemyAlive = false;
 		playerDefeated();
 	} else {
@@ -270,7 +286,7 @@ function playerHealth() {
 function playerDefeated() {
 	$('.gameStatus').html('You were defeated! Game Over!');
 	enemyAlive = false;
-	chars[enemyIndex].attack = 0;
+	chars[enemyIndex].c.attack = 0;
 	enemyIndex = '';
 	index = '';
 	restartButton();
@@ -278,9 +294,9 @@ function playerDefeated() {
 
 // check enemy's health
 function enemyHealth() {
-	if (chars[enemyIndex].health < 1) {	
+	if (chars[enemyIndex].c.health < 1) {	
 		enemyAlive = false;
-		chars[enemyIndex].attack = 0;
+		chars[enemyIndex].c.attack = 0;
 		enemyDefeated();
 	}
 }
@@ -289,10 +305,10 @@ function enemyHealth() {
 function enemyDefeated() {
 	$('.gameStatus').html('');
 	$('.gameStatus').html(
-		'You defeated ' + chars[enemyIndex].name + '!!!' +
+		'You defeated ' + chars[enemyIndex].c.name + '!!!' +
 		'\n' + 'Select next enemy!');
 	$('.enemyDef').remove();
-	chars[enemyIndex].attack = 0;
+	chars[enemyIndex].c.attack = 0;
 	enemyChosen = true;
 	enemyAlive = false;
 	enemiesRemaining -= 1;
@@ -307,7 +323,7 @@ function enemiesLeft() {
 		enemyChosen = false;
 		allDefeated();
 	} else {
-		chars[enemyIndex].attack = 0;
+		chars[enemyIndex].c.attack = 0;
 		enemyAlive = false;
 		enemyChosen = true;
 	}
